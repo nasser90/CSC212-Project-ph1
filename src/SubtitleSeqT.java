@@ -16,7 +16,7 @@ public class SubtitleSeqT implements SubtitleSeq {
 		return Subtitles;
 	}
 
-	
+	///////////
 	public Subtitle getSubtitle(Time time) {
 		int startT = 0;
 		int endT = 0;
@@ -120,22 +120,24 @@ public class SubtitleSeqT implements SubtitleSeq {
 		return null;
 	}
 
-	
+	//////////////////
 	public List<Subtitle> getSubtitles(Time startTime, Time endTime) {
 		LinkedList<Subtitle> l = new LinkedList<>();
 		int startT = 0;
+		int endT = 0;
 		if(!Subtitles.empty()){
 			Subtitles.findFirst();
 			
 			while(!Subtitles.last()){
 				startT = 0;
-				if(Subtitles.retrieve().getStartTime().getHH() <= startTime.getHH()){
+				endT = 0;
+				if(Subtitles.retrieve().getStartTime().getHH() >= startTime.getHH()){
 					if(Subtitles.retrieve().getStartTime().getHH() == startTime.getHH()){
-						if(Subtitles.retrieve().getStartTime().getMM() <= startTime.getMM()){
+						if(Subtitles.retrieve().getStartTime().getMM() >= startTime.getMM()){
 							if(Subtitles.retrieve().getStartTime().getMM() == startTime.getMM()){
-								if(Subtitles.retrieve().getStartTime().getSS() <= startTime.getSS()){
+								if(Subtitles.retrieve().getStartTime().getSS() >= startTime.getSS()){
 									if(Subtitles.retrieve().getStartTime().getSS() == startTime.getSS()){
-										if(Subtitles.retrieve().getStartTime().getMS() <= startTime.getMS()){
+										if(Subtitles.retrieve().getStartTime().getMS() >= startTime.getMS()){
 											if(Subtitles.retrieve().getStartTime().getMS() == startTime.getMS()){
 												startT = 1;
 											}
@@ -149,12 +151,79 @@ public class SubtitleSeqT implements SubtitleSeq {
 					}else
 						startT = 1;
 				}
-				if(startT == 1 && !Subtitles.full())
+				
+				if(Subtitles.retrieve().getStartTime().getHH() <= endTime.getHH()){
+					if(Subtitles.retrieve().getStartTime().getHH() == endTime.getHH()){
+						if(Subtitles.retrieve().getStartTime().getMM() <= endTime.getMM()){
+							if(Subtitles.retrieve().getStartTime().getMM() == endTime.getMM()){
+								if(Subtitles.retrieve().getStartTime().getSS() <= endTime.getSS()){
+									if(Subtitles.retrieve().getStartTime().getSS() == endTime.getSS()){
+										if(Subtitles.retrieve().getStartTime().getMS() <= endTime.getMS()){
+											if(Subtitles.retrieve().getStartTime().getMS() == endTime.getMS()){
+												startT = 1;
+											}
+										}
+									}else
+										startT = 1;
+								}
+							}else
+								startT = 1;
+						}
+					}else
+						startT = 1;
+				}
+				if(startT == 1 && endT == 1 &&!l.full())
 					l.insert(Subtitles.retrieve());
 				
 				Subtitles.findNext();
 			}
+			// Begin for the last element
+			startT = 0;
+			endT = 0;
+			if(Subtitles.retrieve().getStartTime().getHH() >= startTime.getHH()){
+				if(Subtitles.retrieve().getStartTime().getHH() == startTime.getHH()){
+					if(Subtitles.retrieve().getStartTime().getMM() >= startTime.getMM()){
+						if(Subtitles.retrieve().getStartTime().getMM() == startTime.getMM()){
+							if(Subtitles.retrieve().getStartTime().getSS() >= startTime.getSS()){
+								if(Subtitles.retrieve().getStartTime().getSS() == startTime.getSS()){
+									if(Subtitles.retrieve().getStartTime().getMS() >= startTime.getMS()){
+										if(Subtitles.retrieve().getStartTime().getMS() == startTime.getMS()){
+											startT = 1;
+										}
+									}
+								}else
+									startT = 1;
+							}
+						}else
+							startT = 1;
+					}
+				}else
+					startT = 1;
+			}
 			
+			if(Subtitles.retrieve().getStartTime().getHH() <= endTime.getHH()){
+				if(Subtitles.retrieve().getStartTime().getHH() == endTime.getHH()){
+					if(Subtitles.retrieve().getStartTime().getMM() <= endTime.getMM()){
+						if(Subtitles.retrieve().getStartTime().getMM() == endTime.getMM()){
+							if(Subtitles.retrieve().getStartTime().getSS() <= endTime.getSS()){
+								if(Subtitles.retrieve().getStartTime().getSS() == endTime.getSS()){
+									if(Subtitles.retrieve().getStartTime().getMS() <= endTime.getMS()){
+										if(Subtitles.retrieve().getStartTime().getMS() == endTime.getMS()){
+											startT = 1;
+										}
+									}
+								}else
+									startT = 1;
+							}
+						}else
+							startT = 1;
+					}
+				}else
+					startT = 1;
+			}
+			if(startT == 1 && endT == 1 &&!l.full())
+				l.insert(Subtitles.retrieve());
+			// End of last element
 		}
 		
 		return l;
@@ -209,16 +278,17 @@ public class SubtitleSeqT implements SubtitleSeq {
 			Subtitles.findFirst();
 			
 			while(!Subtitles.last()){
-				Subtitles.retrieve().getText().replaceAll(str1, str2)
+				Subtitles.retrieve().setText(Subtitles.retrieve().getText().replaceAll(str1, str2));
+				Subtitles.findNext();
 			}
-			
+			Subtitles.retrieve().setText(Subtitles.retrieve().getText().replaceAll(str1, str2));
 		}
 		
 	}
 
 	
 	public void shift(int offset) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

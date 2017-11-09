@@ -28,15 +28,17 @@ public class TimeS implements Time{
 
 	
 	public void setMM(int mm) {
-		this.mm = mm;
+		if(mm>0 && mm<60)
+			this.mm = mm;
 	}
 
 	
 	public void setSS(int ss) {
-		this.ss = ss;
+		if(ss>0 && ss<60)
+			this.ss = ss;
 	}
 
-	
+	/////
 	public void setMS(int ms) {
 		this.ms = ms;
 	}
