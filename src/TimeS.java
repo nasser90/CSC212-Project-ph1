@@ -28,7 +28,7 @@ public class TimeS implements Time{
 
 	
 	public void setMM(int mm) {
-		if(mm>0 && mm<60)
+		if(mm>=0 && mm<60)
 			this.mm = mm;
 	}
 

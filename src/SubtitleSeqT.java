@@ -13,7 +13,13 @@ public class SubtitleSeqT implements SubtitleSeq {
 	}
 
 	public List<Subtitle> getSubtitles() {
-		return Subtitles;
+		LinkedList<Subtitle> l = new LinkedList<>();
+		
+		while(!Subtitles.last()){
+			
+		}
+		
+		return l;
 	}
 
 	///////////
