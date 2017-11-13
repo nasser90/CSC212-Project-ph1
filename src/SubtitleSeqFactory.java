@@ -16,7 +16,7 @@ public class SubtitleSeqFactory {
 		SubtitleSeq s = new SubtitleSeqT();
 		
 		try{
-			FileReader fr = new FileReader("src/winnie-the-pooh-2011.srt");
+			FileReader fr = new FileReader(fileName);
 			BufferedReader br = new BufferedReader(fr);
 			String line = br.readLine();
 			
