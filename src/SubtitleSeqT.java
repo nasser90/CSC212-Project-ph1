@@ -177,7 +177,55 @@ public class SubtitleSeqT implements SubtitleSeq {
 	
 	public void shift(int offset) {
 		
+		if(!Subtitles.empty())
+			Subtitles.findFirst();
 		
+		while(!Subtitles.last()){
+			int start = convertToMS(Subtitles.retrieve().getStartTime()) + offset;
+			int end = convertToMS(Subtitles.retrieve().getEndTime()) + offset;
+			
+			if(start < 0)
+				start = 0;
+			
+			if(end < 0)
+				end = 0;
+			
+			Time startTime = convertToTime(start);
+			Time endTime = convertToTime(end);
+			
+			
+			if(end != 0){	
+				Subtitles.retrieve().setStartTime(startTime);
+				Subtitles.retrieve().setEndTime(endTime);
+			}else{
+				Subtitles.remove();
+			}
+			
+			Subtitles.findNext();
+		}
+		// Begin for the last element
+
+		int start = convertToMS(Subtitles.retrieve().getStartTime()) + offset;
+		int end = convertToMS(Subtitles.retrieve().getEndTime()) + offset;
+		
+		if(start < 0)
+			start = 0;
+		
+		if(end < 0)
+			end = 0;
+		
+		Time startTime = convertToTime(start);
+		Time endTime = convertToTime(end);
+		
+		
+		if(end != 0){	
+			Subtitles.retrieve().setStartTime(startTime);
+			Subtitles.retrieve().setEndTime(endTime);
+		}else{
+			Subtitles.remove();
+		}
+		// End of last element
+
 	}
 
 	
@@ -187,11 +235,22 @@ public class SubtitleSeqT implements SubtitleSeq {
 	}
 
 	
-	private static int convertToMS(Time t){
+	private int convertToMS(Time t){
 		
 		return  (t.getHH() * 60 * 60 * 1000) +
 				(t.getMM() * 60 * 1000) +
 				(t.getSS() * 1000) +
 				t.getMS();
+	}
+	
+	private Time convertToTime(int ms){
+		Time t = new TimeS();
+		
+		t.setHH(ms / 1000 / 60 / 60);
+		t.setMM(ms / 1000 / 60 % 60);
+		t.setSS(ms / 1000 % 60 % 60);
+		t.setMS(ms % 1000 % 60 % 60);
+		
+		return t;
 	}
 }
