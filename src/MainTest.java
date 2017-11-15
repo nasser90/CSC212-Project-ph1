@@ -149,6 +149,10 @@ public class MainTest {
 		
 		//System.out.println(i.getText());
 		
+		
+		
+		//** testing addSubtitle **//
+		
 		SubtitleSeqT x;
 		
 		x = new SubtitleSeqT();
@@ -168,23 +172,56 @@ public class MainTest {
 		
 		x.addSubtitle(new SubtitleT(new TimeS(0,0,11,0), new TimeS(0,0,12,1), "Hello World 2"));
 		
-//		x.printAll();
 		
+		
+		//** testing loadSubtitle **//
+		
+//		x.printAll();
 //		x = (SubtitleSeqT) SubtitleSeqFactory.loadSubtitleSeq("src/winnie-the-pooh-2011.srt");
-//		
 //		x.printAll();
 		
 		
 		List<Subtitle> l;
 		
+		//** testing getSubtitles(Time startTime, Time endTime) **//
+		
 		//l = x.getSubtitles(new TimeS(0,0,0,0), new TimeS(0,0,30,0));
+		
+		
+		//** testing getSubtitles(String str) **//
 		
 		//l = x.getSubtitles("World");
 		
+		
+		//** testing Shift **//
+		
 		//printList(l);
+//		x.printAll();
+//		System.out.println("-----------------------------");
+//		x.shift(-10001);
+//		x.printAll();
+		
+		
+		//** testing remove **//
+		
+//		x.printAll();
+//		System.out.println("-----------------------------");
+//		x.remove("!");
+//		x.printAll();
+		
+		
+		//** testing replace **//
+		
+//		x.printAll();
+//		System.out.println("-----------------------------");
+//		x.replace("Ok", "Boo");
+//		x.printAll();
+		
+		
+		//** testing cut **//
 		x.printAll();
 		System.out.println("-----------------------------");
-		x.shift(-10001);
+		x.cut(new TimeS(0,0,13,0), new TimeS(0,0,33,1));
 		x.printAll();
 		
 	}
