@@ -206,7 +206,9 @@ public class SubtitleSeqT implements SubtitleSeq {
 				end = 0;
 			
 			Time startTime = convertToTime(start);
+		//	System.out.println(startTime.getHH()+":"+startTime.getMM()+":"+startTime.getSS()+","+startTime.getMS());
 			Time endTime = convertToTime(end);
+		//	System.out.println(endTime.getHH()+":"+endTime.getMM()+":"+endTime.getSS()+","+endTime.getMS());
 			
 			
 			if(end != 0){	
@@ -231,8 +233,9 @@ public class SubtitleSeqT implements SubtitleSeq {
 			end = 0;
 		
 		Time startTime = convertToTime(start);
+		//System.out.println(startTime.getHH()+":"+startTime.getMM()+":"+startTime.getSS()+","+startTime.getMS());
 		Time endTime = convertToTime(end);
-		
+		//System.out.println(endTime.getHH()+":"+endTime.getMM()+":"+endTime.getSS()+","+endTime.getMS());
 		
 		if(end != 0){	
 			Subtitles.retrieve().setStartTime(startTime);
@@ -357,10 +360,10 @@ public class SubtitleSeqT implements SubtitleSeq {
 	private Time convertToTime(int ms){
 		Time t = new TimeS();
 		
-		t.setHH(ms / 1000 / 60 / 60);
-		t.setMM(ms / 1000 / 60 % 60);
-		t.setSS(ms / 1000 % 60 % 60);
-		t.setMS(ms % 1000 % 60 % 60);
+		t.setHH((ms / (1000 * 60 * 60)));
+		t.setMM((ms / (1000 * 60)) % 60);
+		t.setSS((ms / 1000) % 60 );
+		t.setMS(ms % 1000);
 		
 		return t;
 	}

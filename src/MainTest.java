@@ -175,9 +175,17 @@ public class MainTest {
 //		x.printAll();
 		
 		
-		List<Subtitle> l = x.getSubtitles(new TimeS(0,0,0,0), new TimeS(0,0,30,0));
-		printList(l);
+		List<Subtitle> l;
 		
+		//l = x.getSubtitles(new TimeS(0,0,0,0), new TimeS(0,0,30,0));
+		
+		//l = x.getSubtitles("World");
+		
+		//printList(l);
+		x.printAll();
+		System.out.println("-----------------------------");
+		x.shift(-10001);
+		x.printAll();
 		
 	}
 
