@@ -22,46 +22,55 @@ public class SubtitleSeqT implements SubtitleSeq {
 		List<Subtitle> l1 = new LinkedList<>();
 		List<Subtitle> l2 = new LinkedList<>();
 		
-		if(!Subtitles.empty())
+		if(!Subtitles.empty()){
 			Subtitles.findFirst();
 		
-		// copying from the original list to l1 
-		while(!Subtitles.last()){
+			// copying from the original list to l1 
+			while(!Subtitles.last()){
+				if(!l1.full())
+					l1.insert(Subtitles.retrieve());
+				Subtitles.findNext();
+			}
+			
 			if(!l1.full())
 				l1.insert(Subtitles.retrieve());
-			Subtitles.findNext();
-		}
-		
-		if(!l1.full())
-			l1.insert(Subtitles.retrieve());
-		
-		// Sorting the list from the small stratTime to the biggest one
-		// 
-		while(!l1.empty()){
-			l1.findFirst();
 			
-			Subtitle small = l1.retrieve();
-			int s = 0;
-			int c = 0;
-			
-			while(!l1.last()){
+			// Sorting the list from the small stratTime to the biggest one
+			// 
+			while(!l1.empty()){
+				l1.findFirst();
+				
+				Subtitle small = l1.retrieve();
+				int s = 0;
+				int c = 0;
+				
+				while(!l1.last()){
+					if(convertToMS(small.getStartTime()) > convertToMS(l1.retrieve().getStartTime())){
+
+						small = l1.retrieve();
+						s = c;
+					}
+					c++;
+					l1.findNext();
+				}
+				
 				if(convertToMS(small.getStartTime()) > convertToMS(l1.retrieve().getStartTime())){
+
 					small = l1.retrieve();
 					s = c;
 				}
-				c++;
-				l1.findNext();
+				
+				l1.findFirst();
+				for(int i=0; i<= s; i++){
+					if(!l1.empty() && small.equals(l1.retrieve()))
+						l1.remove();
+					else
+						l1.findNext();
+				}
+
+				if(!l2.full())
+					l2.insert(small);
 			}
-			
-			l1.findFirst();
-			for(int i=0; i<= s; i++){
-				if(!l1.empty() && i == s)
-					l1.remove();
-				l1.findNext();
-			}
-			
-			if(!l2.full())
-				l2.insert(small);
 		}
 		
 		return l2;
@@ -358,6 +367,67 @@ public class SubtitleSeqT implements SubtitleSeq {
 	
 	public void printAll( ) {
 		
+		if (!Subtitles.empty()) {
+			
+			Subtitles.findFirst();
+			
+		
+			while ( !Subtitles.last() ) {
+				
+				System.out.print(Subtitles.retrieve().getStartTime().getHH() + ":");
+				
+				System.out.print(Subtitles.retrieve().getStartTime().getMM() + ":");
+				
+				System.out.print(Subtitles.retrieve().getStartTime().getSS() + ",");
+				
+				System.out.print(Subtitles.retrieve().getStartTime().getMS()    );
+				
+				System.out.print("  --> ");
+				
+				System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
+				
+				System.out.print(Subtitles.retrieve().getEndTime().getMM() + ":");
+				
+				System.out.print(Subtitles.retrieve().getEndTime().getSS() + ",");
+				
+				System.out.println(Subtitles.retrieve().getEndTime().getMS()    );
+				
+				
+				System.out.println(Subtitles.retrieve().getText());
+				System.out.println();
+				
+				Subtitles.findNext();
+					
+			}
+			
+			
+			System.out.print(Subtitles.retrieve().getStartTime().getHH() + ":");
+			
+			System.out.print(Subtitles.retrieve().getStartTime().getMM() + ":");
+			
+			System.out.print(Subtitles.retrieve().getStartTime().getSS() + ",");
+			
+			System.out.print(Subtitles.retrieve().getStartTime().getMS()    );
+			
+			System.out.print("  --> ");
+			
+			System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
+			
+			System.out.print(Subtitles.retrieve().getEndTime().getMM() + ":");
+			
+			System.out.print(Subtitles.retrieve().getEndTime().getSS() + ",");
+			
+			System.out.println(Subtitles.retrieve().getEndTime().getMS()    );
+			
+			
+		
+			System.out.println(Subtitles.retrieve().getText());
+			System.out.println();
+			
+		}
+	}
+	
+	public static void printList(List<Subtitle> Subtitles){
 		if (!Subtitles.empty()) {
 			
 			Subtitles.findFirst();

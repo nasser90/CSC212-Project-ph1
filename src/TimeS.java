@@ -40,13 +40,11 @@ public class TimeS implements Time{
 
 	
 	public void setMM(int mm) {
-		if(mm>=0 && mm<60)
 			this.mm = mm;
 	}
 
 	
 	public void setSS(int ss) {
-		if(ss>0 && ss<60)
 			this.ss = ss;
 	}
 
