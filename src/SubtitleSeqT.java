@@ -115,16 +115,16 @@ public class SubtitleSeqT implements SubtitleSeq {
 				if(!r.full())
 					if(convertToMS(startTime) <= convertToMS(sl.retrieve().getStartTime())
 					&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime()))
-						r.insert(Subtitles.retrieve());
+						r.insert(sl.retrieve());
 				
-				Subtitles.findNext();
+				sl.findNext();
 			}
 			// Begin for the last element
 			
 			if(!r.full())
 				if(convertToMS(startTime) <= convertToMS(sl.retrieve().getStartTime())
 				&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime()))
-					r.insert(Subtitles.retrieve());
+					r.insert(sl.retrieve());
 			// End of last element
 		}
 		
