@@ -197,11 +197,12 @@ public class SubtitleSeqT implements SubtitleSeq {
 			if(end != 0){	
 				Subtitles.retrieve().setStartTime(startTime);
 				Subtitles.retrieve().setEndTime(endTime);
+				
+				Subtitles.findNext();
 			}else{
 				Subtitles.remove();
 			}
 			
-			Subtitles.findNext();
 		}
 		// Begin for the last element
 
@@ -231,6 +232,101 @@ public class SubtitleSeqT implements SubtitleSeq {
 	
 	public void cut(Time startTime, Time endTime) {
 		
+		if ( !Subtitles.empty() ) {
+			
+			Subtitles.findFirst();
+			
+			boolean deleted = false;
+			
+				while ( !Subtitles.last() ) {
+					
+					deleted = false;
+					
+					if ( convertToMS(Subtitles.retrieve().getStartTime()) >= convertToMS(startTime) )
+						
+						if ( convertToMS(Subtitles.retrieve().getEndTime()) <= convertToMS(endTime) )
+							
+							Subtitles.remove();
+					
+					Subtitles.findNext();
+					
+				}
+				
+				if ( convertToMS(Subtitles.retrieve().getStartTime()) >= convertToMS(startTime) )
+					
+					if ( convertToMS(Subtitles.retrieve().getEndTime()) <= convertToMS(endTime) )
+						
+						Subtitles.remove();
+				
+					Subtitles.findFirst();
+				
+				int c = convertToMS(startTime) - convertToMS(endTime) - 1;
+				
+				while ( !Subtitles.last() ) {
+					
+					if ( convertToMS(Subtitles.retrieve().getStartTime()) > convertToMS(endTime) ) {
+						
+						int ss = convertToMS(Subtitles.retrieve().getStartTime());
+						
+						int ee = convertToMS(Subtitles.retrieve().getEndTime());
+						
+						ss += c;
+						
+						ee += c;
+						
+						Subtitles.retrieve().setStartTime(convertToTime(ss));
+						
+						Subtitles.retrieve().setStartTime(convertToTime(ee));
+					}
+					
+					if ( convertToMS(Subtitles.retrieve().getStartTime()) < 0 )
+						
+						Subtitles.retrieve().setStartTime(convertToTime(0));
+					
+					if ( convertToMS(Subtitles.retrieve().getEndTime()) <= 0) {
+						
+						Subtitles.remove();
+						
+						deleted = true;
+					
+					}	
+					
+					if ( !deleted )
+					
+						Subtitles.findNext();
+					
+				}
+				
+				if ( convertToMS(Subtitles.retrieve().getStartTime()) > convertToMS(endTime) ) {
+					
+					int ss = convertToMS(Subtitles.retrieve().getStartTime());
+					
+					int ee = convertToMS(Subtitles.retrieve().getEndTime());
+					
+					ss += c;
+					
+					ee += c;
+					
+					Subtitles.retrieve().setStartTime(convertToTime(ss));
+					
+					Subtitles.retrieve().setStartTime(convertToTime(ee));	
+					
+
+					if ( convertToMS(Subtitles.retrieve().getStartTime()) < 0 )
+						
+						Subtitles.retrieve().setStartTime(convertToTime(0));
+					
+					if ( convertToMS(Subtitles.retrieve().getEndTime()) <= 0) {
+						
+						Subtitles.remove();
+						
+						deleted = true;
+					
+					}	
+					
+				}
+				
+			}
 		
 	}
 
@@ -253,4 +349,65 @@ public class SubtitleSeqT implements SubtitleSeq {
 		
 		return t;
 	}
+	
+	public void printAll( ) {
+		
+		if (!Subtitles.empty()) {
+			
+			Subtitles.findFirst();
+			
+		
+			while ( !Subtitles.last() ) {
+				
+				System.out.print(Subtitles.retrieve().getStartTime().getHH() + ":");
+				
+				System.out.print(Subtitles.retrieve().getStartTime().getMM() + ":");
+				
+				System.out.print(Subtitles.retrieve().getStartTime().getSS() + ":");
+				
+				System.out.println(Subtitles.retrieve().getStartTime().getMS() + ":");
+				
+
+				System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
+				
+				System.out.print(Subtitles.retrieve().getEndTime().getMM() + ":");
+				
+				System.out.print(Subtitles.retrieve().getEndTime().getSS() + ":");
+				
+				System.out.println(Subtitles.retrieve().getEndTime().getMS() + ":");
+				
+				
+				System.out.println(Subtitles.retrieve().getText());
+				
+				
+				Subtitles.findNext();
+					
+			}
+			
+			
+			System.out.print(Subtitles.retrieve().getStartTime().getHH() + ":");
+			
+			System.out.print(Subtitles.retrieve().getStartTime().getMM() + ":");
+			
+			System.out.print(Subtitles.retrieve().getStartTime().getSS() + ":");
+			
+			System.out.println(Subtitles.retrieve().getStartTime().getMS()    );
+			
+
+			System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
+			
+			System.out.print(Subtitles.retrieve().getEndTime().getMM() + ":");
+			
+			System.out.print(Subtitles.retrieve().getEndTime().getSS() + ":");
+			
+			System.out.println(Subtitles.retrieve().getEndTime().getMS()    );
+			
+			
+		
+			System.out.println(Subtitles.retrieve().getText());
+			
+			
+		}
+	}
+	
 }
