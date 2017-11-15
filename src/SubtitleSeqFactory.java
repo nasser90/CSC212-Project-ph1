@@ -27,7 +27,7 @@ public class SubtitleSeqFactory {
 			Subtitle st = new SubtitleT();
 			Time t1 = new TimeS();
 			Time t2 = new TimeS();
-			
+
 			while(line != null){
 				
 				if(isTime == 1){
@@ -66,24 +66,41 @@ public class SubtitleSeqFactory {
 					
 				}
 				
+				//System.out.println(linee+" "+line.equals(""));
+				
+				//s.printAll();
+				
 				if(line.equals("")){
 					
 					st.setText(txt);
 					s.addSubtitle(st);
+					st = new SubtitleT();
+					t1 = new TimeS();
+					t2 = new TimeS();
+					//s.printFirst();
+					//System.out.println("After adding:");
+					//s.printAll();
 					//System.out.println(i.getText());
 					txt = null;
 					line = br.readLine();
 					isTime = 1;
+					
 				}
-
+				
 				line = br.readLine();
+				
+				if(line == null){
+					st.setText(txt);
+					s.addSubtitle(st);
+				}
+				
 			}
 			
 		}catch(Exception e){
 			//e.printStackTrace();
 			return null;
 		}
-		
+		//s.printAll();
 		return s;
 	}
 }

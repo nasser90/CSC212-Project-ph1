@@ -5,6 +5,18 @@ public class TimeS implements Time{
 	private int ss;
 	private int ms;
 	
+	public TimeS(){
+		
+	}
+	
+	public TimeS(int hh, int mm, int ss, int ms) {
+		super();
+		this.hh = hh;
+		this.mm = mm;
+		this.ss = ss;
+		this.ms = ms;
+	}
+
 	public int getHH() {
 		return hh;
 	}

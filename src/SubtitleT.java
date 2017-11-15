@@ -4,6 +4,18 @@ public class SubtitleT implements Subtitle {
 	private Time endTime;
 	private String text;
 	
+	public SubtitleT(){
+		
+	}
+	
+	public SubtitleT(Time startTime, Time endTime, String text) {
+		super();
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.text = text;
+	}
+
+
 	public Time getStartTime() {
 		return startTime;
 	}

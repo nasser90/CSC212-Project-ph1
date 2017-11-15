@@ -6,7 +6,13 @@ public class SubtitleSeqT implements SubtitleSeq {
 	public SubtitleSeqT(){
 		Subtitles = new LinkedList<Subtitle>();
 	}
+	
 
+	public SubtitleSeqT(List<Subtitle> subtitles) {
+	
+		Subtitles = subtitles;
+	}
+	
 	public void addSubtitle(Subtitle st) {
 		if(!Subtitles.full())
 			Subtitles.insert(st);
@@ -363,22 +369,23 @@ public class SubtitleSeqT implements SubtitleSeq {
 				
 				System.out.print(Subtitles.retrieve().getStartTime().getMM() + ":");
 				
-				System.out.print(Subtitles.retrieve().getStartTime().getSS() + ":");
+				System.out.print(Subtitles.retrieve().getStartTime().getSS() + ",");
 				
-				System.out.println(Subtitles.retrieve().getStartTime().getMS() + ":");
+				System.out.print(Subtitles.retrieve().getStartTime().getMS()    );
 				
-
+				System.out.print("  --> ");
+				
 				System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
 				
 				System.out.print(Subtitles.retrieve().getEndTime().getMM() + ":");
 				
-				System.out.print(Subtitles.retrieve().getEndTime().getSS() + ":");
+				System.out.print(Subtitles.retrieve().getEndTime().getSS() + ",");
 				
-				System.out.println(Subtitles.retrieve().getEndTime().getMS() + ":");
+				System.out.println(Subtitles.retrieve().getEndTime().getMS()    );
 				
 				
 				System.out.println(Subtitles.retrieve().getText());
-				
+				System.out.println();
 				
 				Subtitles.findNext();
 					
@@ -389,23 +396,24 @@ public class SubtitleSeqT implements SubtitleSeq {
 			
 			System.out.print(Subtitles.retrieve().getStartTime().getMM() + ":");
 			
-			System.out.print(Subtitles.retrieve().getStartTime().getSS() + ":");
+			System.out.print(Subtitles.retrieve().getStartTime().getSS() + ",");
 			
-			System.out.println(Subtitles.retrieve().getStartTime().getMS()    );
+			System.out.print(Subtitles.retrieve().getStartTime().getMS()    );
 			
-
+			System.out.print("  --> ");
+			
 			System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
 			
 			System.out.print(Subtitles.retrieve().getEndTime().getMM() + ":");
 			
-			System.out.print(Subtitles.retrieve().getEndTime().getSS() + ":");
+			System.out.print(Subtitles.retrieve().getEndTime().getSS() + ",");
 			
 			System.out.println(Subtitles.retrieve().getEndTime().getMS()    );
 			
 			
 		
 			System.out.println(Subtitles.retrieve().getText());
-			
+			System.out.println();
 			
 		}
 	}
