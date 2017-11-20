@@ -254,99 +254,77 @@ public class SubtitleSeqT implements SubtitleSeq {
 			
 			Subtitles.findFirst();
 			
-			boolean deleted = false;
-			
-				while ( !Subtitles.last() ) {
+			while ( !Subtitles.last() ) {
+				
+				if ( shouldRemove(Subtitles.retrieve() , startTime , endTime) ) 
 					
-					deleted = false;
-					
-					if ( convertToMS(Subtitles.retrieve().getStartTime()) >= convertToMS(startTime) )
-						
-						if ( convertToMS(Subtitles.retrieve().getEndTime()) <= convertToMS(endTime) )
-							
-							Subtitles.remove();
+					Subtitles.remove();
+				
+				else
 					
 					Subtitles.findNext();
-					
-				}
-				
-				if ( convertToMS(Subtitles.retrieve().getStartTime()) >= convertToMS(startTime) )
-					
-					if ( convertToMS(Subtitles.retrieve().getEndTime()) <= convertToMS(endTime) )
-						
-						Subtitles.remove();
-				
-					Subtitles.findFirst();
-				
-				int c = convertToMS(startTime) - convertToMS(endTime) - 1;
-				
-				while ( !Subtitles.last() ) {
-					
-					if ( convertToMS(Subtitles.retrieve().getStartTime()) > convertToMS(endTime) ) {
-						
-						int ss = convertToMS(Subtitles.retrieve().getStartTime());
-						
-						int ee = convertToMS(Subtitles.retrieve().getEndTime());
-						
-						ss += c;
-						
-						ee += c;
-						
-						Subtitles.retrieve().setStartTime(convertToTime(ss));
-						
-						Subtitles.retrieve().setStartTime(convertToTime(ee));
-					}
-					
-					if ( convertToMS(Subtitles.retrieve().getStartTime()) < 0 )
-						
-						Subtitles.retrieve().setStartTime(convertToTime(0));
-					
-					if ( convertToMS(Subtitles.retrieve().getEndTime()) <= 0) {
-						
-						Subtitles.remove();
-						
-						deleted = true;
-					
-					}	
-					
-					if ( !deleted )
-					
-						Subtitles.findNext();
-					
-				}
-				
-				if ( convertToMS(Subtitles.retrieve().getStartTime()) > convertToMS(endTime) ) {
-					
-					int ss = convertToMS(Subtitles.retrieve().getStartTime());
-					
-					int ee = convertToMS(Subtitles.retrieve().getEndTime());
-					
-					ss += c;
-					
-					ee += c;
-					
-					Subtitles.retrieve().setStartTime(convertToTime(ss));
-					
-					Subtitles.retrieve().setStartTime(convertToTime(ee));	
-					
-
-					if ( convertToMS(Subtitles.retrieve().getStartTime()) < 0 )
-						
-						Subtitles.retrieve().setStartTime(convertToTime(0));
-					
-					if ( convertToMS(Subtitles.retrieve().getEndTime()) <= 0) {
-						
-						Subtitles.remove();
-						
-						deleted = true;
-					
-					}	
-					
-				}
 				
 			}
+			
+			if ( shouldRemove(Subtitles.retrieve(),  startTime,  endTime) ) 
+				
+				Subtitles.remove();
+			
+			
+			shiftSubs(startTime, endTime);
+			
+		}
+
 		
 	}
+	
+	private boolean shouldRemove( Subtitle sub , Time s , Time e ) {
+		
+		if ( !Subtitles.empty() ) {
+			
+			if ( convertToMS(sub.getStartTime()) >= convertToMS(s) && !(convertToMS(sub.getStartTime()) > convertToMS(e))  ) {
+				
+				
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+	
+	private void shiftSubs( Time start , Time end ) {
+		
+		if ( !Subtitles.empty() ) {
+			
+			Subtitles.findFirst();
+			
+			while ( !Subtitles.last() ) {
+				
+				if ( convertToMS(Subtitles.retrieve().getStartTime()) > convertToMS(end) ) {
+					
+					Subtitles.retrieve().setStartTime(convertToTime(convertToMS(Subtitles.retrieve().getStartTime()) + (convertToMS(start) - convertToMS(end) - 1)  ));
+				
+					Subtitles.retrieve().setEndTime(convertToTime(convertToMS(Subtitles.retrieve().getEndTime()) + (convertToMS(start) - convertToMS(end) - 1)  ));
+					
+				}
+				
+				
+				Subtitles.findNext();
+				
+			}
+			
+			if ( convertToMS(Subtitles.retrieve().getStartTime()) > convertToMS(end) ) {
+				
+				Subtitles.retrieve().setStartTime(convertToTime(convertToMS(Subtitles.retrieve().getStartTime()) + (convertToMS(start) - convertToMS(end) - 1)  ));
+			
+				Subtitles.retrieve().setEndTime(convertToTime(convertToMS(Subtitles.retrieve().getEndTime()) + (convertToMS(start) - convertToMS(end) - 1)  ));
+				
+			}
+		}
+		
+	}
+
 
 	
 	private int convertToMS(Time t){
