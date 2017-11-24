@@ -286,11 +286,14 @@ public class SubtitleSeqT implements SubtitleSeq {
 		
 		if ( !Subtitles.empty() ) {
 			
-			if ( convertToMS(sub.getStartTime()) >= convertToMS(s) && !(convertToMS(sub.getStartTime()) > convertToMS(e))  ) {
-				
+			if ((convertToMS(sub.getStartTime()) >= convertToMS(s) && convertToMS(sub.getStartTime()) <= convertToMS(e))
+					
+			||	(convertToMS(sub.getEndTime()) >= convertToMS(s) && convertToMS(sub.getEndTime()) <= convertToMS(e))	
+			
+			) 
 				
 				return true;
-			}
+			
 		}
 		
 		return false;
@@ -307,9 +310,9 @@ public class SubtitleSeqT implements SubtitleSeq {
 				
 				if ( convertToMS(Subtitles.retrieve().getStartTime()) > convertToMS(end) ) {
 					
-					Subtitles.retrieve().setStartTime(convertToTime(convertToMS(Subtitles.retrieve().getStartTime()) + (convertToMS(start) - convertToMS(end) - 1) ));
+					Subtitles.retrieve().setStartTime(convertToTime(convertToMS(Subtitles.retrieve().getStartTime()) + (convertToMS(start) - convertToMS(end) -1)  ));
 				
-					Subtitles.retrieve().setEndTime(convertToTime(convertToMS(Subtitles.retrieve().getEndTime()) + (convertToMS(start) - convertToMS(end) - 1)  ));
+					Subtitles.retrieve().setEndTime(convertToTime(convertToMS(Subtitles.retrieve().getEndTime()) + (convertToMS(start) - convertToMS(end) -1)  ));
 					
 				}
 				
@@ -320,15 +323,14 @@ public class SubtitleSeqT implements SubtitleSeq {
 			
 			if ( convertToMS(Subtitles.retrieve().getStartTime()) > convertToMS(end) ) {
 				
-				Subtitles.retrieve().setStartTime(convertToTime(convertToMS(Subtitles.retrieve().getStartTime()) + (convertToMS(start) - convertToMS(end) - 1)  ));
+				Subtitles.retrieve().setStartTime(convertToTime(convertToMS(Subtitles.retrieve().getStartTime()) + (convertToMS(start) - convertToMS(end) -1)  ));
 			
-				Subtitles.retrieve().setEndTime(convertToTime(convertToMS(Subtitles.retrieve().getEndTime()) + (convertToMS(start) - convertToMS(end) - 1)  ));
+				Subtitles.retrieve().setEndTime(convertToTime(convertToMS(Subtitles.retrieve().getEndTime()) + (convertToMS(start) - convertToMS(end) -1)  ));
 				
 			}
 		}
 		
 	}
-
 
 	
 	public static int convertToMS(Time t){
