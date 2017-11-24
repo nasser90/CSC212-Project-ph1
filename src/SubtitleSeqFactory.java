@@ -79,8 +79,9 @@ public class SubtitleSeqFactory {
 					
 					if(txt == null)
 						txt = line;
-					else
+					else if(!line.equals("")){ /// for new line
 						txt += " "+line;
+					}
 					
 				}
 				
