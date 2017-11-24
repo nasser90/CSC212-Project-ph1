@@ -14,7 +14,7 @@ public class SubtitleSeqT implements SubtitleSeq {
 	}
 	
 	public void addSubtitle(Subtitle st) {
-		if(!Subtitles.full())
+		if(!Subtitles.full() && getSubtitle(st.getStartTime()) == null && getSubtitle(st.getEndTime()) == null)
 			Subtitles.insert(st);
 	}
 
@@ -101,7 +101,7 @@ public class SubtitleSeqT implements SubtitleSeq {
 		return null;
 	}
 
-	//////////////////
+	//////////////////  
 	public List<Subtitle> getSubtitles(Time startTime, Time endTime) {
 		List<Subtitle> sl = getSubtitles();
 		List<Subtitle> r = new LinkedList<>();
@@ -113,8 +113,10 @@ public class SubtitleSeqT implements SubtitleSeq {
 			while(!sl.last()){
 				
 				if(!r.full())
-					if(convertToMS(startTime) <= convertToMS(sl.retrieve().getStartTime())
-					&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime()))
+					if((convertToMS(startTime) <= convertToMS(sl.retrieve().getStartTime())
+					&& convertToMS(endTime) >= convertToMS(sl.retrieve().getStartTime()))
+					||(convertToMS(startTime) <= convertToMS(sl.retrieve().getEndTime())
+							&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime())))
 						r.insert(sl.retrieve());
 				
 				sl.findNext();
@@ -122,8 +124,10 @@ public class SubtitleSeqT implements SubtitleSeq {
 			// Begin for the last element
 			
 			if(!r.full())
-				if(convertToMS(startTime) <= convertToMS(sl.retrieve().getStartTime())
-				&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime()))
+				if((convertToMS(startTime) <= convertToMS(sl.retrieve().getStartTime())
+				&& convertToMS(endTime) >= convertToMS(sl.retrieve().getStartTime()))
+				||(convertToMS(startTime) <= convertToMS(sl.retrieve().getEndTime())
+						&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime())))
 					r.insert(sl.retrieve());
 			// End of last element
 		}
@@ -303,7 +307,7 @@ public class SubtitleSeqT implements SubtitleSeq {
 				
 				if ( convertToMS(Subtitles.retrieve().getStartTime()) > convertToMS(end) ) {
 					
-					Subtitles.retrieve().setStartTime(convertToTime(convertToMS(Subtitles.retrieve().getStartTime()) + (convertToMS(start) - convertToMS(end) - 1)  ));
+					Subtitles.retrieve().setStartTime(convertToTime(convertToMS(Subtitles.retrieve().getStartTime()) + (convertToMS(start) - convertToMS(end) - 1) ));
 				
 					Subtitles.retrieve().setEndTime(convertToTime(convertToMS(Subtitles.retrieve().getEndTime()) + (convertToMS(start) - convertToMS(end) - 1)  ));
 					
@@ -327,7 +331,7 @@ public class SubtitleSeqT implements SubtitleSeq {
 
 
 	
-	private int convertToMS(Time t){
+	public static int convertToMS(Time t){
 		
 		return  (t.getHH() * 60 * 60 * 1000) +
 				(t.getMM() * 60 * 1000) +

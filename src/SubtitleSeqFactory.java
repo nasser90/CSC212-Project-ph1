@@ -11,7 +11,7 @@ public class SubtitleSeqFactory {
 	}
 
 	// Load a subtitle sequence from an SRT file. If the file does not exist or
-	// is corrupted (incorrect format), null is returned.
+	// is corrupted (incorrect format), null is returned. 
 	public static SubtitleSeq loadSubtitleSeq(String fileName) {
 		SubtitleSeq s = new SubtitleSeqT();
 		
@@ -22,7 +22,7 @@ public class SubtitleSeqFactory {
 			
 			int isTime = 1;
 			String txt = null;
-			line = br.readLine();
+			int c = 1;
 			
 			Subtitle st = new SubtitleT();
 			Time t1 = new TimeS();
@@ -30,8 +30,22 @@ public class SubtitleSeqFactory {
 
 			while(line != null){
 				
+				// order number
+				
+				if(isTime == 1 && Integer.parseInt(line) == c){
+					line = br.readLine();
+					c++;
+				}else if(isTime == 1 && Integer.parseInt(line) != c){
+					return null;
+				}
+				
 				if(isTime == 1){
 					//System.out.println(line);
+					
+					// check --> is not exist.
+					if(!line.substring(13,16).equals(" --> "))
+						return null;
+					
 					t1.setHH(Integer.parseInt(line.substring(0, 2)));
 					t1.setMM(Integer.parseInt(line.substring(3, 5)));
 					t1.setSS(Integer.parseInt(line.substring(6, 8)));
@@ -44,6 +58,10 @@ public class SubtitleSeqFactory {
 					
 					st.setStartTime(t1);
 					st.setEndTime(t2);
+					
+					// check endTime is not less than startTime.
+					if(SubtitleSeqT.convertToMS(t1) > SubtitleSeqT.convertToMS(t2))
+						return null;
 					
 //					System.out.println(i.getStartTime().getHH());
 //					System.out.println(i.getStartTime().getMM());
@@ -70,6 +88,10 @@ public class SubtitleSeqFactory {
 				
 				//s.printAll();
 				
+				// check next line for time line is not empty.
+				if(line.equals("") && txt == null && isTime == 0 )
+					return null;
+				
 				if(line.equals("")){
 					
 					st.setText(txt);
@@ -82,7 +104,6 @@ public class SubtitleSeqFactory {
 					//s.printAll();
 					//System.out.println(i.getText());
 					txt = null;
-					line = br.readLine();
 					isTime = 1;
 					
 				}
@@ -94,10 +115,12 @@ public class SubtitleSeqFactory {
 					s.addSubtitle(st);
 				}
 				
+				
+				
 			}
 			
 		}catch(Exception e){
-			//e.printStackTrace();
+			e.printStackTrace();
 			return null;
 		}
 		//s.printAll();
