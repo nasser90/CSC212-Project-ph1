@@ -41,9 +41,9 @@ public class SubtitleSeqFactory {
 				
 				if(isTime == 1){
 					//System.out.println(line);
-					
+
 					// check --> is not exist.
-					if(!line.substring(13,16).equals(" --> "))
+					if(!line.substring(12,17).equals(" --> "))
 						return null;
 					
 					t1.setHH(Integer.parseInt(line.substring(0, 2)));
