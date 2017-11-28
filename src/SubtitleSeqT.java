@@ -369,7 +369,7 @@ public class SubtitleSeqT implements SubtitleSeq {
 				
 				System.out.print(Subtitles.retrieve().getStartTime().getMS()    );
 				
-				System.out.print("  --> ");
+				System.out.print("  -->  ");
 				
 				System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
 				
@@ -396,7 +396,7 @@ public class SubtitleSeqT implements SubtitleSeq {
 			
 			System.out.print(Subtitles.retrieve().getStartTime().getMS()    );
 			
-			System.out.print("  --> ");
+			System.out.print("  -->  ");
 			
 			System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
 			
@@ -430,7 +430,7 @@ public class SubtitleSeqT implements SubtitleSeq {
 				
 				System.out.print(Subtitles.retrieve().getStartTime().getMS()    );
 				
-				System.out.print("  --> ");
+				System.out.print("  -->  ");
 				
 				System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
 				
@@ -457,7 +457,7 @@ public class SubtitleSeqT implements SubtitleSeq {
 			
 			System.out.print(Subtitles.retrieve().getStartTime().getMS()    );
 			
-			System.out.print("  --> ");
+			System.out.print("  -->  ");
 			
 			System.out.print(Subtitles.retrieve().getEndTime().getHH() + ":");
 			

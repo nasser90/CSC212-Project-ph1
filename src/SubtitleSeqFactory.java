@@ -15,6 +15,13 @@ public class SubtitleSeqFactory {
 	public static SubtitleSeq loadSubtitleSeq(String fileName) {
 		SubtitleSeq s = new SubtitleSeqT();
 		
+		String extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+		String ext = "srt";
+		
+		// check if extension is srt
+		if(!extension.equals(ext))
+			return null;
+			
 		try{
 			FileReader fr = new FileReader(fileName);
 			BufferedReader br = new BufferedReader(fr);
