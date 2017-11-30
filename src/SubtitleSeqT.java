@@ -116,7 +116,9 @@ public class SubtitleSeqT implements SubtitleSeq {
 					if((convertToMS(startTime) <= convertToMS(sl.retrieve().getStartTime())
 					&& convertToMS(endTime) >= convertToMS(sl.retrieve().getStartTime()))
 					||(convertToMS(startTime) <= convertToMS(sl.retrieve().getEndTime())
-							&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime())))
+							&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime()))
+					||(convertToMS(startTime) > convertToMS(sl.retrieve().getStartTime())
+							&& convertToMS(endTime) <= convertToMS(sl.retrieve().getEndTime())))
 						r.insert(sl.retrieve());
 				
 				sl.findNext();
@@ -127,7 +129,9 @@ public class SubtitleSeqT implements SubtitleSeq {
 				if((convertToMS(startTime) <= convertToMS(sl.retrieve().getStartTime())
 				&& convertToMS(endTime) >= convertToMS(sl.retrieve().getStartTime()))
 				||(convertToMS(startTime) <= convertToMS(sl.retrieve().getEndTime())
-						&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime())))
+						&& convertToMS(endTime) >= convertToMS(sl.retrieve().getEndTime()))
+				||(convertToMS(startTime) > convertToMS(sl.retrieve().getStartTime())
+						&& convertToMS(endTime) <= convertToMS(sl.retrieve().getEndTime())))
 					r.insert(sl.retrieve());
 			// End of last element
 		}
@@ -289,8 +293,9 @@ public class SubtitleSeqT implements SubtitleSeq {
 			if ((convertToMS(sub.getStartTime()) >= convertToMS(s) && convertToMS(sub.getStartTime()) <= convertToMS(e))
 					
 			||	(convertToMS(sub.getEndTime()) >= convertToMS(s) && convertToMS(sub.getEndTime()) <= convertToMS(e))	
-			
+			||  (convertToMS(sub.getStartTime()) < convertToMS(s) && convertToMS(sub.getEndTime()) > convertToMS(e))
 			) 
+		
 				
 				return true;
 			

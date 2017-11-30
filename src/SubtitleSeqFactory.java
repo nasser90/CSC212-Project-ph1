@@ -15,6 +15,7 @@ public class SubtitleSeqFactory {
 	public static SubtitleSeq loadSubtitleSeq(String fileName) {
 		SubtitleSeq s = new SubtitleSeqT();
 		
+		try{
 		String extension = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
 		String ext = "srt";
 		
@@ -22,7 +23,7 @@ public class SubtitleSeqFactory {
 		if(!extension.equals(ext))
 			return null;
 			
-		try{
+		
 			FileReader fr = new FileReader(fileName);
 			BufferedReader br = new BufferedReader(fr);
 			String line = br.readLine();
@@ -126,12 +127,13 @@ public class SubtitleSeqFactory {
 				
 				
 			}
-			
+			br.close();
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}
 		//s.printAll();
+		
 		return s;
 	}
 }
