@@ -1,4 +1,4 @@
-﻿1
+1
 00:00:35,536 --> 00:00:37,746
 [whistling]
 
@@ -1630,7 +1630,7 @@ Artistic talent runs through my family.
 - [chalk screeches]
 
 371
-00:20:17,593 --> 00:20:19,970
+00:20:17,594 --> 00:20:19,970
 - In fact, it practically stampedes!
 - [chalk screeches]
 
@@ -3920,7 +3920,7 @@ We ought to be heading back.
 Just a moment, everyone.
 
 884
-00:46:57,943 --> 00:46:58,569
+00:46:57,944 --> 00:46:58,569
 Just a moment, everyone.
 
 885
